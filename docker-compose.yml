@@ -1,12 +1,31 @@
 services:
-  portfolio:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: portfolio
+
+  traefik:
+    image: traefik:v3.0
+    container_name: traefik
     restart: unless-stopped
+    command:
+      - "--api.insecure=false"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
+      - "--certificatesresolvers.letsencrypt.acme.email=carlghayes@gmail.com"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
     ports:
       - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "letsencrypt:/letsencrypt"
+    networks:
+      - portfolio-net
+
+  portfolio:
+    image: portfolio-portfolio
+    container_name: portfolio
+    restart: unless-stopped
     volumes:
       - ./src:/usr/share/nginx/html:ro
     networks:
@@ -20,13 +39,26 @@ services:
       - /var/cache/nginx/fastcgi_temp
       - /var/cache/nginx/uwsgi_temp
       - /var/cache/nginx/scgi_temp
-      - /run
       - /tmp
     cap_drop:
       - ALL
     cap_add:
       - NET_BIND_SERVICE
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.portfolio.rule=Host(`carlghayes.com`) || Host(`www.carlghayes.com`)"
+      - "traefik.http.routers.portfolio.entrypoints=websecure"
+      - "traefik.http.routers.portfolio.tls.certresolver=letsencrypt"
+      - "traefik.http.services.portfolio.loadbalancer.server.port=80"
+      - "traefik.http.routers.portfolio-http.rule=Host(`carlghayes.com`) || Host(`www.carlghayes.com`)"
+      - "traefik.http.routers.portfolio-http.entrypoints=web"
+      - "traefik.http.routers.portfolio-http.middlewares=redirect-to-https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true"
 
 networks:
   portfolio-net:
     driver: bridge
+
+volumes:
+  letsencrypt:
