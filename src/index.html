@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Carl Hayes — Systems & Infrastructure Engineer">
+    <title>Carl Hayes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav class="nav">
+        <div class="nav-logo">Carl<span>.</span>Hayes</div>
+
+        <ul class="nav-links">
+            <li><a href="#home" class="active">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#writing">Writing</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <div class="nav-right">
+            <div class="nav-icons">
+                <a href="https://linkedin.com/in/carlghayes"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   aria-label="LinkedIn">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                </a>
+                <a href="https://github.com/carlghayes"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   aria-label="GitHub">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="nav-divider"></div>
+
+            <button class="theme-toggle"
+                    id="themeToggle"
+                    aria-label="Toggle light mode">
+                <svg id="themeIcon" width="14" height="14" viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor" stroke-width="2"
+                     stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+                <div class="toggle-track">
+                    <div class="toggle-thumb"></div>
+                </div>
+                <span class="toggle-label" id="toggleLabel">Dark</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <div class="hero-grid"></div>
+        <div class="hero-scan"></div>
+        <div class="hero-vignette"></div>
+        <div class="hero-ghost">CH</div>
+        <div class="hero-content">
+            <div class="hero-eyebrow">Systems & Infrastructure Engineer</div>
+            <h1 class="hero-name">Carl<br><span>Hayes</span></h1>
+            <p class="hero-bio">I'm an infrastructure engineer with a thing for systems that just work. If it runs on Linux, lives in a container, or belongs in a data center — I'm probably interested.</p>
+            <div class="hero-tags">
+                <span class="tag">Docker</span>
+                <span class="tag">Linux</span>
+                <span class="tag">vCenter</span>
+                <span class="tag">AWS</span>
+                <span class="tag">Windows Server</span>
+                <span class="tag">DevOps</span>
+                <span class="tag">Networking</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <!-- GitHub -->
+        <section id="github">
+            <div class="section-header">
+                <div class="section-eyebrow">GitHub activity</div>
+                <a href="https://github.com/carlghayes"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="view-all">View all repos →</a>
+            </div>
+            <div class="github-card">
+                <div class="stat-row" id="githubStats">
+                    <div class="stat"><div class="stat-number">—</div><div class="stat-label">Repos</div></div>
+                    <div class="stat"><div class="stat-number">—</div><div class="stat-label">Followers</div></div>
+                    <div class="stat"><div class="stat-number">—</div><div class="stat-label">Following</div></div>
+                    <div class="stat"><div class="stat-number">—</div><div class="stat-label">Gists</div></div>
+                </div>
+                <div class="contrib-grid" id="contribGrid"></div>
+                <div id="repoList"></div>
+            </div>
+        </section>
+
+        <!-- Writing -->
+        <section id="writing">
+            <div class="section-header">
+                <div class="section-eyebrow">Technical writing</div>
+                <a href="https://carlintheclouds.hashnode.dev"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="view-all">All articles →</a>
+            </div>
+            <div class="writing-grid" id="writingGrid">
+                <div class="writing-card">
+                    <div class="writing-title" style="color:var(--color-text-faint)">Loading articles...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About + Contact -->
+        <div class="two-col">
+            <div class="col-card" id="about">
+                <div class="section-eyebrow">About</div>
+                <p>I've spent my career deploying and securing mission-critical systems across Linux, VMware vCenter, Windows Server, and AWS environments. Now I'm channeling that experience into containerization, automated pipelines, and a growing focus on DevOps and DevSecOps.</p>
+                <div class="skills-grid">
+                    <div class="skill-item">Docker</div>
+                    <div class="skill-item">Linux</div>
+                    <div class="skill-item">vCenter</div>
+                    <div class="skill-item">AWS</div>
+                    <div class="skill-item">Bash</div>
+                    <div class="skill-item">Security</div>
+                    <div class="skill-item">Networking</div>
+                    <div class="skill-item">Win Server</div>
+                    <div class="skill-item">DevOps</div>
+                </div>
+            </div>
+
+            <div class="col-card" id="contact">
+                <div class="section-eyebrow">Contact</div>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" placeholder="Jane Smith" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="jane@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" placeholder="Your message..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Send message</button>
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-text">Built with Docker & Nginx · AWS EC2</div>
+        <div class="footer-text">© 2026 Carl Hayes</div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
