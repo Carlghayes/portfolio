@@ -156,10 +156,57 @@ async function loadWriting() {
 /* ============================================
    CONTACT FORM
    ============================================ */
-document.getElementById('contactForm').addEventListener('submit', (e) => {
+const contactForm = document.getElementById('contactForm');
+const formBtn     = contactForm.querySelector('.btn');
+
+contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    alert('Thanks for your message — I\'ll be in touch soon.');
-    e.target.reset();
+
+    const name    = document.getElementById('name').value.trim();
+    const email   = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+
+    // Basic honeypot check — handled server side by Formspree
+    // but we validate fields client side first
+    if (!name || !email || !message) return;
+
+    formBtn.textContent    = 'Sending...';
+    formBtn.disabled       = true;
+    formBtn.style.opacity  = '0.6';
+
+    try {
+        const res = await fetch('https://formspree.io/f/mwvzdeoa', {
+            method:  'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept':       'application/json'
+            },
+            body: JSON.stringify({ name, email, message })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+            formBtn.textContent   = 'Message sent ✓';
+            formBtn.style.opacity = '1';
+            contactForm.reset();
+            setTimeout(() => {
+                formBtn.textContent = 'Send message';
+                formBtn.disabled    = false;
+            }, 3000);
+        } else {
+            throw new Error(data?.errors?.[0]?.message || 'Submission failed');
+        }
+
+    } catch (err) {
+        console.error('Form error:', err);
+        formBtn.textContent   = 'Something went wrong';
+        formBtn.style.opacity = '1';
+        setTimeout(() => {
+            formBtn.textContent = 'Send message';
+            formBtn.disabled    = false;
+        }, 3000);
+    }
 });
 
 /* ============================================

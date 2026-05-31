@@ -156,6 +156,12 @@
                         <label for="message">Message</label>
                         <textarea id="message" name="message" placeholder="Your message..." required></textarea>
                     </div>
+                    <!-- Honeypot — hidden from humans, bots fill it in and get blocked -->
+                    <input type="text"
+                           name="_gotcha"
+                           style="display:none"
+                           tabindex="-1"
+                           autocomplete="off">
                     <button type="submit" class="btn">Send message</button>
                 </form>
             </div>
