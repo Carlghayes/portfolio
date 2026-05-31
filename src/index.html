@@ -142,29 +142,45 @@
             </div>
 
             <div class="col-card" id="contact">
-                <div class="section-eyebrow">Contact</div>
-                <form id="contactForm">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" placeholder="Jane Smith" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="jane@example.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" placeholder="Your message..." required></textarea>
-                    </div>
-                    <!-- Honeypot — hidden from humans, bots fill it in and get blocked -->
-                    <input type="text"
-                           name="_gotcha"
-                           style="display:none"
-                           tabindex="-1"
-                           autocomplete="off">
-                    <button type="submit" class="btn">Send message</button>
-                </form>
-            </div>
+    <div class="section-eyebrow">Contact</div>
+
+    <div data-fs-success style="display:none;font-size:12px;color:var(--color-accent);margin-bottom:1rem;letter-spacing:.06em;">
+        Message sent — I'll be in touch soon.
+    </div>
+    <div data-fs-error style="display:none;font-size:12px;color:#E24B4A;margin-bottom:1rem;letter-spacing:.06em;"></div>
+
+    <form id="contactForm">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Jane Smith" required data-fs-field>
+            <span data-fs-error="name" style="font-size:11px;color:#E24B4A;"></span>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="jane@example.com" required data-fs-field>
+            <span data-fs-error="email" style="font-size:11px;color:#E24B4A;"></span>
+        </div>
+        <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Your message..." required data-fs-field></textarea>
+            <span data-fs-error="message" style="font-size:11px;color:#E24B4A;"></span>
+        </div>
+
+        <!-- Honeypot — hidden from humans, bots fill it in and get blocked -->
+        <input type="text"
+               name="_gotcha"
+               style="display:none"
+               tabindex="-1"
+               autocomplete="off">
+
+        <button type="submit" class="btn" data-fs-submit-btn>Send message</button>
+    </form>
+
+    <script>
+        window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+        formspree('initForm', { formElement: '#contactForm', formId: 'mwvzdeoa' });
+    </script>
+            <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
         </div>
 
     </main>
