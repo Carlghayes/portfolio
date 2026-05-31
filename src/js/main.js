@@ -89,19 +89,21 @@ async function loadGitHub() {
 /* ============================================
    HASHNODE API
    ============================================ */
-const HASHNODE_USERNAME = 'yourusername'; // <-- replace
+const HASHNODE_HOST = 'carlintheclouds.hashnode.dev';
 
 async function loadWriting() {
     const query = `
         query {
-            user(username: "${HASHNODE_USERNAME}") {
-                posts(page: 1, pageSize: 3) {
-                    nodes {
-                        title
-                        brief
-                        slug
-                        publishedAt
-                        tags { name }
+            publication(host: "${HASHNODE_HOST}") {
+                posts(first: 3) {
+                    edges {
+                        node {
+                            title
+                            brief
+                            slug
+                            publishedAt
+                            tags { name }
+                        }
                     }
                 }
             }
@@ -109,16 +111,16 @@ async function loadWriting() {
     `;
 
     try {
-        const res  = await fetch('https://gql.hashnode.com', {
+        const res = await fetch('https://gql.hashnode.com', {
             method:  'POST',
             headers: { 'Content-Type': 'application/json' },
             body:    JSON.stringify({ query })
         });
 
         const data  = await res.json();
-        const posts = data?.data?.user?.posts?.nodes;
+        const edges = data?.data?.publication?.posts?.edges;
 
-        if (!posts || posts.length === 0) {
+        if (!edges || edges.length === 0) {
             document.getElementById('writingGrid').innerHTML = `
                 <div class="writing-card">
                     <div class="writing-title" style="color:var(--color-text-faint)">
@@ -128,12 +130,12 @@ async function loadWriting() {
             return;
         }
 
-        document.getElementById('writingGrid').innerHTML = posts.map((post, i) => {
+        document.getElementById('writingGrid').innerHTML = edges.map(({ node: post }, i) => {
             const date = new Date(post.publishedAt).toLocaleDateString('en-US', {
                 month: 'short', year: 'numeric'
             });
             const tag = post.tags?.[0]?.name || 'Article';
-            const url = `https://${HASHNODE_USERNAME}.hashnode.dev/${post.slug}`;
+            const url = `https://${HASHNODE_HOST}/${post.slug}`;
 
             return `
                 <a href="${url}" target="_blank" rel="noopener noreferrer" class="writing-card">
@@ -150,6 +152,12 @@ async function loadWriting() {
 
     } catch (err) {
         console.error('Hashnode API error:', err);
+        document.getElementById('writingGrid').innerHTML = `
+            <div class="writing-card">
+                <div class="writing-title" style="color:var(--color-text-faint)">
+                    Unable to load articles right now.
+                </div>
+            </div>`;
     }
 }
 
