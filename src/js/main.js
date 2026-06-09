@@ -96,81 +96,6 @@ async function loadGitHub() {
 }
 
 /* ============================================
-   HASHNODE API
-   ============================================ */
-const HASHNODE_HOST = 'carlintheclouds.hashnode.dev';
-
-async function loadWriting() {
-    const query = `
-        query {
-            publication(host: "${HASHNODE_HOST}") {
-                posts(first: 3) {
-                    edges {
-                        node {
-                            title
-                            brief
-                            slug
-                            publishedAt
-                            tags { name }
-                        }
-                    }
-                }
-            }
-        }
-    `;
-
-    try {
-        const res = await fetch('https://gql.hashnode.com', {
-            method:  'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body:    JSON.stringify({ query })
-        });
-
-        const data  = await res.json();
-        const edges = data?.data?.publication?.posts?.edges;
-
-        if (!edges || edges.length === 0) {
-            document.getElementById('writingGrid').innerHTML = `
-                <div class="writing-card">
-                    <div class="writing-title" style="color:var(--color-text-faint)">
-                        No articles yet — check back soon.
-                    </div>
-                </div>`;
-            return;
-        }
-
-        document.getElementById('writingGrid').innerHTML = edges.map(({ node: post }, i) => {
-            const date = new Date(post.publishedAt).toLocaleDateString('en-US', {
-                month: 'short', year: 'numeric'
-            });
-            const tag = post.tags?.[0]?.name || 'Article';
-            const url = `https://${HASHNODE_HOST}/${post.slug}`;
-
-            return `
-                <a href="${url}" target="_blank" rel="noopener noreferrer" class="writing-card">
-                    <div class="writing-ghost-num">0${i + 1}</div>
-                    <div class="writing-cat">${tag}</div>
-                    <div class="writing-title">${post.title}</div>
-                    <div class="writing-excerpt">${post.brief}</div>
-                    <div class="writing-footer">
-                        <span class="writing-date">${date}</span>
-                        <span class="writing-read">Read →</span>
-                    </div>
-                </a>`;
-        }).join('');
-
-    } catch (err) {
-        console.error('Hashnode API error:', err);
-        document.getElementById('writingGrid').innerHTML = `
-            <div class="writing-card">
-                <div class="writing-title" style="color:var(--color-text-faint)">
-                    Unable to load articles right now.
-                </div>
-            </div>`;
-    }
-}
-
-/* ============================================
    CONTACT FORM (Formspree)
    ============================================ */
 window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
@@ -193,7 +118,7 @@ const sectionObserver = new IntersectionObserver((entries) => {
 }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
 
 document.querySelectorAll('section[id], div[id]').forEach(el => {
-    const ids = ['home', 'about', 'writing', 'contact'];
+    const ids = ['home', 'about', 'contact'];
     if (ids.includes(el.id)) sectionObserver.observe(el);
 });
 
@@ -221,4 +146,3 @@ mobileMenu.querySelectorAll('a').forEach(link => {
    INIT
    ============================================ */
 loadGitHub();
-loadWriting();
