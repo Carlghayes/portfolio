@@ -33,7 +33,7 @@ async function loadGitHub() {
     try {
         const [userRes, reposRes] = await Promise.all([
             fetch(`https://api.github.com/users/${GITHUB_USERNAME}`),
-            fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=3`)
+            fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=stars&direction=desc&per_page=3`)
         ]);
 
         const user  = await userRes.json();
@@ -46,11 +46,14 @@ async function loadGitHub() {
             <div class="stat"><div class="stat-number">${user.public_gists}</div><div class="stat-label">Gists</div></div>
         `;
 
+        const contribRes = await fetch(`https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}?y=last`);
+        const contribData = await contribRes.json();
+        const cells = contribData.contributions.slice(-182);
+
         const grid = document.getElementById('contribGrid');
         grid.innerHTML = '';
-        for (let i = 0; i < 182; i++) {
-            const level = Math.random() < 0.55 ? 0 : Math.floor(Math.random() * 4) + 1;
-            const cell  = document.createElement('div');
+        for (const { level } of cells) {
+            const cell = document.createElement('div');
             cell.className = `contrib-cell${level > 0 ? ' l' + level : ''}`;
             grid.appendChild(cell);
         }
@@ -83,6 +86,12 @@ async function loadGitHub() {
 
     } catch (err) {
         console.error('GitHub API error:', err);
+        document.getElementById('githubStats').innerHTML = `
+            <div class="stat" style="grid-column:1/-1;text-align:center">
+                <div class="stat-label" style="color:var(--color-text-faint)">Unable to load GitHub data right now.</div>
+            </div>`;
+        document.getElementById('contribGrid').innerHTML = '';
+        document.getElementById('repoList').innerHTML = '';
     }
 }
 
@@ -162,8 +171,51 @@ async function loadWriting() {
 }
 
 /* ============================================
-   CONTACT FORM
+   CONTACT FORM (Formspree)
    ============================================ */
+window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+formspree('initForm', { formElement: '#contactForm', formId: 'mwvzdeoa' });
+
+/* ============================================
+   NAV ACTIVE STATE
+   ============================================ */
+const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+
+const sectionObserver = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+        if (entry.isIntersecting) {
+            const id = entry.target.id;
+            navLinks.forEach(link => {
+                link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+            });
+        }
+    }
+}, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+
+document.querySelectorAll('section[id], div[id]').forEach(el => {
+    const ids = ['home', 'about', 'writing', 'contact'];
+    if (ids.includes(el.id)) sectionObserver.observe(el);
+});
+
+/* ============================================
+   MOBILE NAV TOGGLE
+   ============================================ */
+const navToggle  = document.getElementById('navToggle');
+const mobileMenu = document.getElementById('mobileMenu');
+
+navToggle.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open);
+    navToggle.classList.toggle('active', open);
+});
+
+mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', false);
+        navToggle.classList.remove('active');
+    });
+});
 
 /* ============================================
    INIT

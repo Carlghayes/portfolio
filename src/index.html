@@ -23,6 +23,13 @@
             <li><a href="#contact">Contact</a></li>
         </ul>
 
+        <!-- Mobile hamburger -->
+        <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
         <div class="nav-right">
             <div class="nav-icons">
                 <a href="https://linkedin.com/in/carlghayes"
@@ -60,6 +67,16 @@
             </button>
         </div>
     </nav>
+
+    <!-- MOBILE NAV MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#writing">Writing</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </div>
 
     <!-- HERO -->
     <section class="hero" id="home">
@@ -175,15 +192,12 @@
 
         <button type="submit" class="btn" data-fs-submit-btn>Send message</button>
     </form>
-
-    <script>
-        window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
-        formspree('initForm', { formElement: '#contactForm', formId: 'mwvzdeoa' });
-    </script>
-            <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
-        </div>
+            </div><!-- /.col-card#contact -->
+        </div><!-- /.two-col -->
 
     </main>
+
+    <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 
     <footer class="footer">
         <div class="footer-text">Built with Docker & Nginx · AWS EC2</div>
